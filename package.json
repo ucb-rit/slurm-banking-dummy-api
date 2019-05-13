@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "main": "server.js",
   "author": "Nicolas Chan",
+  "scripts": {
+    "start": "node server.js",
+    "spec": "redoc-cli spec/openapi.json"
+  },
   "dependencies": {
     "express": "^4.16.4",
     "readable-id": "^1.0.0",
+    "redoc-cli": "^0.8.4",
     "seed-random": "^2.2.0"
   }
 }

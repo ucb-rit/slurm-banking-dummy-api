@@ -1,3 +1,6 @@
+# Ignore built redoc-spec (since user can build it with `yarn spec`)
+redoc-static.html
+
 # Logs
 logs
 *.log

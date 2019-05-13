@@ -1,0 +1,176 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Slurm Banking API"
+  },
+  "paths": {
+    "/projects/{project}": {
+      "get": {
+        "summary": "Project info by project name",
+        "operationId": "projectInfoByName",
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "name": "project",
+            "in": "path",
+            "required": true,
+            "description": "The name of the project",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Projects"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-project-usage/{username}/{project}": {
+      "get": {
+        "summary": "Get a single user's usage on a project",
+        "operationId": "userProjectUsage",
+        "tags": [
+          "projects",
+          "users"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "The username of the user",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "project",
+            "in": "path",
+            "required": true,
+            "description": "The project to query for the user's usage",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActiveUserProjectLinkUsage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "applicationjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Projects": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "cluster": {
+            "type": "string"
+          },
+          "active_users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pending_users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "PI": {
+            "type": "string"
+          },
+          "monthly_pid": {
+            "type": "string"
+          },
+          "allocation": {
+            "type": "number",
+            "format": "int64"
+          }
+        }
+      },
+      "ActiveUserProjectLinkUsage": {
+        "properties": {
+          "allocation": {
+            "type": "number",
+            "format": "int64"
+          },
+          "usage": {
+            "type": "number",
+            "format": "int64"
+          },
+          "user": {
+            "type": "string"
+          },
+          "project": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
