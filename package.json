@@ -1,0 +1,11 @@
+{
+  "name": "slurm-bank-dummy-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "Nicolas Chan",
+  "dependencies": {
+    "express": "^4.16.4",
+    "readable-id": "^1.0.0",
+    "seed-random": "^2.2.0"
+  }
+}
