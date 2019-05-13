@@ -52,8 +52,7 @@
         "summary": "Get a single user's usage on a project",
         "operationId": "userProjectUsage",
         "tags": [
-          "projects",
-          "users"
+          "usage"
         ],
         "parameters": [
           {
@@ -89,7 +88,111 @@
           "default": {
             "description": "unexpected error",
             "content": {
-              "applicationjson": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-project-usage/{username}/{project}/deduct": {
+      "put": {
+        "summary": "Deduct service units from a user's account",
+        "operationId": "userProjectUsageDeduct",
+        "tags": [
+          "usage"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "The username of the user",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "project",
+            "in": "path",
+            "required": true,
+            "description": "The project to deduct usage from",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "The number of service units to deduct",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "null response on success (there were sufficient service units and the amount has been deducted)"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-project-usage/{username}/{project}/refund": {
+      "put": {
+        "summary": "Refund service units to a user's account",
+        "operationId": "userProjectUsageRefund",
+        "tags": [
+          "usage"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "The username of the user",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "project",
+            "in": "path",
+            "required": true,
+            "description": "The project to refund usage from",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "The number of service units to refund",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "null response on success"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -138,20 +241,20 @@
             "type": "string"
           },
           "allocation": {
-            "type": "number",
-            "format": "int64"
+            "type": "string"
+          },
+          "usage": {
+            "type": "string"
           }
         }
       },
       "ActiveUserProjectLinkUsage": {
         "properties": {
           "allocation": {
-            "type": "number",
-            "format": "int64"
+            "type": "string"
           },
           "usage": {
-            "type": "number",
-            "format": "int64"
+            "type": "string"
           },
           "user": {
             "type": "string"
