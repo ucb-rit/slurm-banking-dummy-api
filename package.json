@@ -5,7 +5,7 @@
   "author": "Nicolas Chan",
   "scripts": {
     "start": "node server.js",
-    "spec": "redoc-cli spec/openapi.json"
+    "spec": "redoc-cli bundle spec/openapi.json"
   },
   "dependencies": {
     "express": "^4.16.4",
