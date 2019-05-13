@@ -3,7 +3,7 @@
 This dummy API is for testing the Slurm banking plugin. It provides deterministic outputs based on inputs. For example, the initial allocation and usage for an account is based on the account name.
 
 ## Spec
-The API spec is documented using the [OpenAPI Specification](https://www.openapis.org/) in [spec/openapi.json](/tree/master/spec/openapi.json). HTML documentation can be built with `yarn spec` (after installing dependencies).
+The API spec is documented using the [OpenAPI Specification](https://www.openapis.org/) in [spec/openapi.json](spec/openapi.json). HTML documentation can be built with `yarn spec` (after installing dependencies).
 
 ## Usage
 
