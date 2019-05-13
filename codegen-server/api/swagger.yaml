@@ -1,0 +1,202 @@
+openapi: 3.0.0
+info:
+  title: Slurm Banking API
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /projects/{project}:
+    get:
+      tags:
+      - projects
+      summary: Project info by project name
+      operationId: projectInfoByName
+      parameters:
+      - name: project
+        in: path
+        description: The name of the project
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Projects'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Projects
+  /user-project-usage/{username}/{project}:
+    get:
+      tags:
+      - usage
+      summary: Get a single user's usage on a project
+      operationId: userProjectUsage
+      parameters:
+      - name: username
+        in: path
+        description: The username of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: project
+        in: path
+        description: The project to query for the user's usage
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActiveUserProjectLinkUsage'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Usage
+  /user-project-usage/{username}/{project}/deduct:
+    put:
+      tags:
+      - usage
+      summary: Deduct service units from a user's account
+      operationId: userProjectUsageDeduct
+      parameters:
+      - name: username
+        in: path
+        description: The username of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: project
+        in: path
+        description: The project to deduct usage from
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: amount
+        in: query
+        description: The number of service units to deduct
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: null response on success (there were sufficient service units
+            and the amount has been deducted)
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Usage
+  /user-project-usage/{username}/{project}/refund:
+    put:
+      tags:
+      - usage
+      summary: Refund service units to a user's account
+      operationId: userProjectUsageRefund
+      parameters:
+      - name: username
+        in: path
+        description: The username of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: project
+        in: path
+        description: The project to refund usage from
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: amount
+        in: query
+        description: The number of service units to refund
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: null response on success
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Usage
+components:
+  schemas:
+    Projects:
+      properties:
+        name:
+          type: string
+        display_name:
+          type: string
+        description:
+          type: string
+        cluster:
+          type: string
+        active_users:
+          type: array
+          items:
+            type: string
+        pending_users:
+          type: array
+          items:
+            type: string
+        active:
+          type: boolean
+        PI:
+          type: string
+        monthly_pid:
+          type: string
+        allocation:
+          type: string
+        usage:
+          type: string
+    ActiveUserProjectLinkUsage:
+      properties:
+        allocation:
+          type: string
+        usage:
+          type: string
+        user:
+          type: string
+        project:
+          type: string
+    Error:
+      required:
+      - message
+      properties:
+        message:
+          type: string
